@@ -44,13 +44,13 @@ namespace turtlesim
 
 TurtleFrame::TurtleFrame(QWidget* parent, Qt::WindowFlags f)
 : QFrame(parent, f)
-, path_image_(500, 500, QImage::Format_ARGB32)
+, path_image_(800, 600, QImage::Format_ARGB32)
 , path_painter_(&path_image_)
 , frame_count_(0)
 , id_counter_(0)
 , private_nh_("~")
 {
-  setFixedSize(500, 500);
+  setFixedSize(800, 600);
   setWindowTitle("TurtleSim");
 
   srand(time(NULL));
@@ -111,7 +111,8 @@ TurtleFrame::TurtleFrame(QWidget* parent, Qt::WindowFlags f)
 
   width_in_meters_ = (width() - 1) / meter_;
   height_in_meters_ = (height() - 1) / meter_;
-  spawnTurtle("", width_in_meters_ / 2.0, height_in_meters_ / 2.0, 0);
+  spawnTurtle("turtle1", width_in_meters_ / 4.0, height_in_meters_ / 4.0, 0);
+  spawnTurtle("turtle2", width_in_meters_ / 4.0 * 3, height_in_meters_ / 4.0 * 3, 0);
 
   // spawn all available turtle types
   if(false)
@@ -190,7 +191,7 @@ std::string TurtleFrame::spawnTurtle(const std::string& name, float x, float y, 
     }
   }
 
-  TurtlePtr t(new Turtle(ros::NodeHandle(real_name), turtle_images_[index], QPointF(x, height_in_meters_ - y), angle));
+  TurtlePtr t(new Turtle(ros::NodeHandle("turtles/" + real_name), turtle_images_[index], QPointF(x, height_in_meters_ - y), angle));
   turtles_[real_name] = t;
   update();
 
@@ -275,7 +276,8 @@ bool TurtleFrame::resetCallback(std_srvs::Empty::Request&, std_srvs::Empty::Resp
   ROS_INFO("Resetting turtlesim.");
   turtles_.clear();
   id_counter_ = 0;
-  spawnTurtle("", width_in_meters_ / 2.0, height_in_meters_ / 2.0, 0);
+  spawnTurtle("turtle1", width_in_meters_ / 4.0, height_in_meters_ / 4.0, 0);
+  spawnTurtle("turtle2", width_in_meters_ / 4.0 * 3, height_in_meters_ / 4.0 * 3, 0);
   clear();
   return true;
 }

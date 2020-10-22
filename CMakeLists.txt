@@ -37,17 +37,7 @@ add_executable(turtlesim_node ${turtlesim_node_SRCS} ${turtlesim_node_MOCS})
 target_link_libraries(turtlesim_node Qt5::Widgets ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(turtlesim_node turtlesim_gencpp)
 
-add_executable(turtle_teleop_key tutorials/teleop_turtle_key.cpp)
-target_link_libraries(turtle_teleop_key ${catkin_LIBRARIES})
-add_dependencies(turtle_teleop_key turtlesim_gencpp)
-add_executable(draw_square tutorials/draw_square.cpp)
-target_link_libraries(draw_square ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(draw_square turtlesim_gencpp)
-add_executable(mimic tutorials/mimic.cpp)
-target_link_libraries(mimic ${catkin_LIBRARIES})
-add_dependencies(mimic turtlesim_gencpp)
-
-install(TARGETS turtlesim_node turtle_teleop_key draw_square mimic
+install(TARGETS turtlesim_node
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY images
